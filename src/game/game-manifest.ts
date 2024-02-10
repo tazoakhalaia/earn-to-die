@@ -1,4 +1,4 @@
 export const GameManifest = {
-    car: 'assets/game/car.png',
-    map: 'assets/game/map.jpg'
-}
+  map: 'assets/game/map.jpg',
+  rightArrow: 'assets/game/right-arrow.png'
+};
