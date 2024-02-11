@@ -18,5 +18,7 @@ export class AppComponent {
   constructor() {
     Assets.addBundle('game', GameManifest);
     this.canvas.init();
+    console.log('%c ZOBMIE GAME!', 'background:red; padding: 15px; color: black; border-radius: 3px; font-weight: 700');
+    
   }
 }

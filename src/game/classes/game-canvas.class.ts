@@ -4,7 +4,6 @@ import { GameComponent } from './main.class';
 export class GameCanvas {
   private _cotainer = new Container();
   private app: Application | undefined;
-  private img: any;
   private game = new GameComponent();
 
   async init() {

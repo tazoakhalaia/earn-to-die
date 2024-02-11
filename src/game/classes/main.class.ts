@@ -1,13 +1,16 @@
-import { Container, Graphics } from 'pixi.js';
+import { Assets, Container, Graphics, Sprite, Ticker } from 'pixi.js';
 import { Map } from './map/map.class';
-import { PlatformOne } from './levels/roundOne/level-one.class';
+import { Platform } from './platform/platform.class';
 import { Car } from './car.class.';
+import { Background } from './background.class';
 
 export class GameComponent {
   private _container = new Container();
   private map = new Map();
   private car = new Car();
-  private platformOne = new PlatformOne();
+  private platform = new Platform();
+  private background = new Background();
+  private ticker = new Ticker()
 
   get container() {
     return this._container;
@@ -19,17 +22,18 @@ export class GameComponent {
     //   value.garageContainer.removeChildren();
     // };
     // this._container.addChild(this.map.container);
-    this.platformOne.init();
+    this.background.init();
+    this.platform.init();
     this.car.init();
+    this.car.changeCar('bigRedCar');
     this.car.callback = (value: any) => {
-      if (
-        value.carY >
-        this.platformOne.container.y - this.platformOne.container.height + 20
-      ) {
-        value.ticker.stop();
-        value.carY = value.carY;
-      }
+      console.log(value);
+      this.platform.container.x -= value.speed
     };
-    this._container.addChild(this.platformOne.container, this.car.container);
+    this._container.addChild(
+      this.background.container,
+      this.platform.container,
+      this.car.container
+    );
   }
 }

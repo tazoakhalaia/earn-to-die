@@ -2,9 +2,10 @@ import { Assets, Container, Sprite, Ticker } from 'pixi.js';
 
 export class Car {
   private _container = new Container();
-  private gravity = 1
   private ticker = new Ticker()
   private car: Sprite | undefined
+  private defaultCar!: string 
+  private speed = 10
   private _callback = (value:any) => undefined
   get callback() {
     return this._callback
@@ -18,27 +19,43 @@ export class Car {
     return this._container;
   }
   init() {
+    this.defaultCar = 'car'
+    this._container.x = 20
     this.renderCar()
+    this.carMove()
   }
 
- 
-  
-  renderCar() {
-    this.car = new Sprite(Assets.get('car'));
-    const gravityFall = () => {
-      if(this.car)
-      this.car.y += this.gravity
-      this._callback({
-        ticker: this.ticker,
-        carY: this.car?.y
-      })
+  changeCar = (value:any) => {
+    this.defaultCar = value
+    if (this.car) {
+      this._container.removeChild(this.car); 
+      this.renderCar(); 
     }
-    this.car.width = 110
+  }
+
+  renderCar = () =>  {
+    this.car = new Sprite(Assets.get(this.defaultCar));
+    this.car.width = 220
     this.car.height = 110
-    this.ticker.add(gravityFall)
-    this.ticker.start()
-    this._container.addChild(this.car);
-    
+    this.car.y = 530
+    this._container.addChild(this.car); 
+  }
+
+  carMove() {
+    window.addEventListener('keydown', (e) => {
+      const key = e.key
+      if(key === 'w'){
+        
+        this._callback({
+         carX: this.car?.x,
+         speed: this.speed
+        })
+      }
+    //  if(key === "w") {
+    //   if(this.car)
+    //   this.car.x += this.speed
+    //  }
+    })
   }
 
 
